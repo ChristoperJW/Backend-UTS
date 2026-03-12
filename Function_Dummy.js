@@ -20,5 +20,3 @@ LuasPermukaanTabung(10, 20);
 VolumeTabung = ((r,t) => {console.log(3.14 * r**2 * t)});
 VolumeTabung(10, 20);
 //Punya Michael
-
-//a
