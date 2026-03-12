@@ -9,5 +9,5 @@ KelilingPersegi(10);
 //Punya Louise
 
 //punga Angga
-LuasPersegi = ((a) => { console.log(a * a) });
-LuasPersegi(10);
+Balok = ((p, l, t) => {console.log(2 * (p * l + p * t + l * t))});
+Balok(10, 5, 3);
