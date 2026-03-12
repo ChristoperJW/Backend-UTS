@@ -13,7 +13,7 @@ Balok(10, 5, 3);
 
 LuasSegitiga = ((a, t) => {console.log(0.5 * a * t)});
 LuasSegitiga(10, 20);
-//Punya Monic
+//Punya Monica
 
 LuasPermukaanTabung = ((r,t) => {console.log(2 * 3.14 * r * (r + t))});
 LuasPermukaanTabung(10, 20);
