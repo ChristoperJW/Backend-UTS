@@ -7,3 +7,7 @@ KelilingPersegi = ((a) => {console.log(4 * a)});
 KelilingPersegi(10);
 
 //Punya Louise
+
+//punga Angga
+LuasPersegi = ((a) => { console.log(a * a) });
+LuasPersegi(10);
