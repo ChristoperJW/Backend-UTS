@@ -8,7 +8,12 @@ KelilingPersegi(10);
 
 //Punya Louise
 
+Balok = ((p, l, t) => {console.log(2 * (p * l + p * t + l * t))});
+Balok(10, 5, 3);
+//punga Angga
+
+//Punya Monic
 LuasSegitiga = ((a, t) => {console.log(0.5 * a * t)});
 LuasSegitiga(10, 20);
 
-//Punya Monic
+
