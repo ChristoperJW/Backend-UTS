@@ -1,1 +1,1 @@
-Ini ada dummy text 
+Ini ada dummy text dan sebuah testing
