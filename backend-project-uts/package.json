@@ -20,7 +20,10 @@
     "method-override": "^3.0.0",
     "mongoose": "^8.12.2",
     "pino": "^9.6.0",
-    "pino-http": "^10.4.0"
+    "pino-http": "^10.4.0",
+    "jsonwebtoken": "^9.0.2",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.6.0",
