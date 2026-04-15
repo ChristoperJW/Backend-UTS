@@ -16,6 +16,10 @@ module.exports = {
     prefix: '/api',
   },
   port: process.env.PORT || 5000,
+  jwt: {
+    secret: process.env.JWT_SECRET || 'development-secret-key',
+    expiresIn: process.env.JWT_EXPIRES_IN || '7d',
+  },
   database: {
     connection: process.env.DB_CONNECTION,
     name: process.env.DB_NAME,
