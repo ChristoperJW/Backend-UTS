@@ -1,18 +1,17 @@
-# Backend Programming Template (2025)
+# LANGKAH YANG HARUS DIKERJAKAN
 
-## Development Setup
+1. Masukkan dulu endpoint yang harus dipakai di backend-project-uts/   src/routes.js
 
-1. Fork and clone this repository to your local computer.
-2. Open the project using VS Code.
-3. Install the recommended VS Code extensions: `ESLint` and `Prettier`.
-4. Copy and rename `.env.example` to `.env`. Open `.env` and change the database connection string.
-5. Run `npm install` to install the project dependencies.
-6. Run `npm run dev` to start the dev server.
-7. Test the endpoints in the API client app.
+2. Ubah dan tambahkan function serta folder untuk masing-masing routes di dalam routes.js
 
-## Add New API Endpoints
+3. Tambahkan bentuk skema yang harus dibuat dalam database di backend-project-uts/models/
 
-1. Create a new database schema in `./src/models`.
-2. Create a new folder in `./src/api/components` (if needed). Remember to separate your codes to repositories, services, controllers, and routes.
-3. Add the new route in `./src/api/routes.js`.
-4. Test your new endpoints in the API client app.
+4. Jika lupa cara melakukan langkah 1 - 3, lihat contoh yang ada di RevisiTemplate1 (atau RevisiTemplate2, menyusul)
+
+5. Sesudah berhasil melakukan langkah 1 - 3 jangan sampai lupa melakukan import dan export agar dapat dijalankan
+
+6. Tambahan, backend-project-uts/utils diisi jika memang kita memerlukan fungsi khusus untuk melakukan suatu hal. Di contoh kemarin itu berfungsi untuk membandingkan hashed password dan normal password dan melakukan hash pada password
+
+7. Tambahkan dan kerjakan saja yang memang merupakan tugas kalian, saat kalian melakukan pull request, nanti merge akan disetujui oleh admin. Mergenya sendiri merupakan hasil gabungan yang ada di main *dan* file kalian. Jika ada override, akan diperbaiki oleh admin.
+
+# ps, ada satu folder yang kurang di backend-project-uts. Entah apakah node_module diperlukan atau tidak, untuk itu sementara tidak ditambahkan dulu

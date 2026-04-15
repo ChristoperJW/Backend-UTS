@@ -25,6 +25,14 @@ async function deleteUser(id) {
   return usersRepository.deleteUser(id);
 }
 
+async function changePassword(id, hashedNewPassword) {
+  return usersRepository.changePassword(id, hashedNewPassword);
+}
+
+// async function getOldPassword(id) {
+//   return usersRepository.getOldPassword(id);
+// }
+
 module.exports = {
   getUsers,
   getUser,
@@ -32,4 +40,6 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
+  changePassword,
+  // getOldPassword,
 };

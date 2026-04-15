@@ -1,6 +1,7 @@
+/* eslint-disable prefer-destructuring */
 const usersService = require('./users-service');
 const { errorResponder, errorTypes } = require('../../../core/errors');
-const { hashPassword } = require('../../../utils/password');
+const { hashPassword, passwordMatched } = require('../../../utils/password');
 
 async function getUsers(request, response, next) {
   try {
@@ -147,31 +148,75 @@ async function updateUser(request, response, next) {
 
 async function changePassword(request, response, next) {
   // TODO: Implement this function
-  // const id = request.params.id;
-  // const {
-  //   old_password: oldPassword,
-  //   new_password: newPassword,
-  //   confirm_new_password: confirmNewPassword,
-  // } = request.body;
-  //
-  // Make sure that:
-  // - the user exists by checking the user ID
-  // - the old password is correct
-  // - the new password is at least 8 characters long
-  // - the new password is different from the old password
-  // - the new password and confirm new password match
-  //
-  // Note that the password is hashed in the database, so you need to
-  // compare the hashed password with the old password. Use the passwordMatched
-  // function from src/utils/password.js to compare the old password with the
-  // hashed password.
-  //
-  // If any of the conditions above is not met, return an error response
-  // with the appropriate status code and message.
-  //
-  // If all conditions are met, update the user's password and return
-  // a success response.
-  return next(errorResponder(errorTypes.NOT_IMPLEMENTED));
+  try {
+    const user = await usersService.getUser(request.params.id);
+    const {
+      old_password: oldPassword,
+      new_password: newPassword,
+      confirm_new_password: confirmNewPassword,
+    } = request.body;
+
+    // Make sure that:
+    // - the user exists by checking the user ID
+    // - the old password is correct
+    // - the new password is at least 8 characters long
+    // - the new password is different from the old password
+    // - the new password and confirm new password match
+
+    // The user must exist
+    if (!user) {
+      throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'User not found');
+    }
+
+    // The old password must be correct
+    if (!(await passwordMatched(oldPassword, user.password))) {
+      throw errorResponder(
+        errorTypes.UNPROCESSABLE_ENTITY,
+        'Old Password is wrong'
+      );
+    }
+
+    // The new password is at least 8 characters long
+    if (newPassword.length < 8) {
+      throw errorResponder(
+        errorTypes.VALIDATION_ERROR,
+        'Password must be at least 8 characters long'
+      );
+    }
+
+    // Checking if the new password is the same as the old password
+    if (oldPassword === newPassword) {
+      throw errorResponder(
+        errorTypes.VALIDATION_ERROR,
+        'New Password cannot be the same as old password'
+      );
+    }
+
+    // The new password and confirm new password must match
+    if (newPassword !== confirmNewPassword) {
+      throw errorResponder(
+        errorTypes.VALIDATION_ERROR,
+        'Password and confirm password do not match'
+      );
+    }
+    // Hash the new password before saving it to the database
+    const hashedPassword = await hashPassword(newPassword);
+
+    const success = await usersService.changePassword(user.id, hashedPassword);
+
+    if (!success) {
+      throw errorResponder(
+        errorTypes.UNPROCESSABLE_ENTITY,
+        'Failed to change password'
+      );
+    }
+
+    return response
+      .status(200)
+      .json({ message: 'Password Changed successfully' });
+  } catch (error) {
+    return next(error);
+  }
 }
 
 async function deleteUser(request, response, next) {

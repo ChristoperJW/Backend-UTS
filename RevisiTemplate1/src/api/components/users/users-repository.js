@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+const { get } = require('mongoose');
 const { Users } = require('../../../models');
 
 async function getUsers() {
