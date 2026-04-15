@@ -1,13 +1,13 @@
 const express = require('express');
 
-const books = require('./components/books/books-route');
-const users = require('./components/users/users-route');
+
+// tambahkan endpoint masing-masing
+
 
 module.exports = () => {
   const app = express.Router();
-
-  books(app);
-  users(app);
+  // tambah di sini berarti tambah file di folder components
+  // liat contoh yang ada di folder RevisiTemplate1 (bagian komponen)
 
   return app;
 };
