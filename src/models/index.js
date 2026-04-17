@@ -12,12 +12,16 @@ connectionString.pathname += config.database.name;
 mongoose.connect(`${connectionString.toString()}`);
 
 const db = mongoose.connection;
+
 db.once('open', () => {
   logger.info('Successfully connected to MongoDB');
 });
 
 const dbExports = {};
 dbExports.db = db;
+
+dbExports.mongoose = mongoose;
+dbExports.Schema = mongoose.Schema;
 
 const basename = path.basename(__filename);
 
