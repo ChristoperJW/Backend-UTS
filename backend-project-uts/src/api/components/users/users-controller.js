@@ -57,7 +57,6 @@ async function changePassword(req, res, next) {
       throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'User not found');
     }
 
-    // 🔥 SECURITY: hanya user sendiri
     if (req.user.id !== req.params.id) {
       throw errorResponder(errorTypes.FORBIDDEN, 'Unauthorized');
     }
