@@ -3,11 +3,11 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable import/no-unresolved */
 const jwt = require('jsonwebtoken');
-// Import dari config, jangan langsung dari process.env
+
 const { jwtSecret } = require('../core/config');
 
 function generateToken(payload) {
-  // Pastikan variabel ada nilainya
+
   if (!jwtSecret) {
     throw new Error('JWT_SECRET is not defined in environment variables');
   }
