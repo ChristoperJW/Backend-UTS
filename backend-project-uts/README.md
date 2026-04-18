@@ -16,3 +16,42 @@
 2. Create a new folder in `./src/api/components` (if needed). Remember to separate your codes to repositories, services, controllers, and routes.
 3. Add the new route in `./src/api/routes.js`.
 4. Test your new endpoints in the API client app.
+
+## Gacha API Endpoints
+
+### Perform Gacha
+
+- **Endpoint**: `POST /api/gacha`
+- **Description**: Perform a gacha draw. User can do up to 5 draws per day.
+- **Request Body**:
+  ```json
+  {
+    "userId": "string"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "success": true,
+    "prize": "Emas 10 gram" // or "No prize won"
+  }
+  ```
+- **Error**: 422 if daily limit exceeded.
+
+### Get Gacha History
+
+- **Endpoint**: `GET /api/gacha/history/:userId`
+- **Description**: Get the history of gacha attempts for a user.
+- **Response**: Array of attempts with date and prize.
+
+### Get Prizes Status
+
+- **Endpoint**: `GET /api/gacha/prizes`
+- **Description**: Get the list of prizes and remaining quota.
+- **Response**: Array of prizes with name and remainingQuota.
+
+### Get Winners
+
+- **Endpoint**: `GET /api/gacha/winners`
+- **Description**: Get the list of winners for each prize, with masked names.
+- **Response**: Object with prize names as keys and array of masked names as values.

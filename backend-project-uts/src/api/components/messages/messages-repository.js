@@ -1,29 +1,30 @@
-const { Messages } = require('../../../models');
+const { Conversation, Message } = require('../../../models');
 
-async function getMessages() {
-  return Messages.find({});
+async function getConversations(userId) {
+  return Conversation.find({ participants: userId });
 }
 
-async function getMessage(id) {
-  return Messages.findById(id);
+async function createConversation(userId, participantId) {
+  return Conversation.create({
+    participants: [userId, participantId],
+  });
 }
 
-async function createMessage(senderId, receiverId, content) {
-  return Messages.create({ senderId, receiverId, content });
+async function getMessagesByConversation(conversationId) {
+  return Message.find({ conversationId }).sort({ createdAt: 1 });
 }
 
-async function updateMessage(id, content) {
-  return Messages.updateOne({ _id: id }, { $set: { content } });
-}
-
-async function deleteMessage(id) {
-  return Messages.deleteOne({ _id: id });
+async function sendMessage(conversationId, senderId, content) {
+  return Message.create({
+    conversationId,
+    senderId,
+    content,
+  });
 }
 
 module.exports = {
-  getMessages,
-  getMessage,
-  createMessage,
-  updateMessage,
-  deleteMessage,
+  getConversations,
+  createConversation,
+  getMessagesByConversation,
+  sendMessage,
 };

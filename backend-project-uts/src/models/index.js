@@ -12,7 +12,7 @@ connectionString.pathname += config.database.name;
 mongoose.connect(`${connectionString.toString()}`);
 
 const db = mongoose.connection;
-db.once('open', () => {
+db.once('open', async () => {
   logger.info('Successfully connected to MongoDB');
 });
 

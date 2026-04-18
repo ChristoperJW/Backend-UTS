@@ -1,29 +1,24 @@
 const messagesRepository = require('./messages-repository');
 
-async function getMessages() {
-  return messagesRepository.getMessages();
+async function getConversations(userId) {
+  return messagesRepository.getConversations(userId);
 }
 
-async function getMessage(id) {
-  return messagesRepository.getMessage(id);
+async function createConversation(userId, participantId) {
+  return messagesRepository.createConversation(userId, participantId);
 }
 
-async function createMessage(senderId, receiverId, content) {
-  return messagesRepository.createMessage(senderId, receiverId, content);
+async function getMessagesByConversation(conversationId) {
+  return messagesRepository.getMessagesByConversation(conversationId);
 }
 
-async function updateMessage(id, content) {
-  return messagesRepository.updateMessage(id, content);
-}
-
-async function deleteMessage(id) {
-  return messagesRepository.deleteMessage(id);
+async function sendMessage(conversationId, senderId, content) {
+  return messagesRepository.sendMessage(conversationId, senderId, content);
 }
 
 module.exports = {
-  getMessages,
-  getMessage,
-  createMessage,
-  updateMessage,
-  deleteMessage,
+  getConversations,
+  createConversation,
+  getMessagesByConversation,
+  sendMessage,
 };
