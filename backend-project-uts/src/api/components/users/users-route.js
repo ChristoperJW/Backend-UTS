@@ -13,13 +13,17 @@ module.exports = (app) => {
 
   route.put('/:id', verifyToken, usersController.updateUser);
 
-  route.put('/:id/change-password', verifyToken, usersController.changePassword);
+  route.put(
+    '/:id/change-password',
+    verifyToken,
+    usersController.changePassword
+  );
 
   route.post('/:id/follow', verifyToken, usersController.followUser);
 
   route.post('/:id/unfollow', verifyToken, usersController.unfollowUser);
 
   route.get('/:id/followers', usersController.getFollowers);
-  
+
   route.get('/:id/following', usersController.getFollowing);
 };

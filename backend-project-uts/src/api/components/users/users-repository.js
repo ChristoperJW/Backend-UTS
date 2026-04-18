@@ -18,17 +18,11 @@ async function createUser(email, password, fullName) {
 }
 
 async function updateUser(id, email, fullName) {
-  return Users.updateOne(
-    { _id: id },
-    { $set: { email, fullName } }
-  );
+  return Users.updateOne({ _id: id }, { $set: { email, fullName } });
 }
 
 async function changePassword(id, password) {
-  return Users.updateOne(
-    { _id: id },
-    { $set: { password } }
-  );
+  return Users.updateOne({ _id: id }, { $set: { password } });
 }
 
 async function deleteUser(id) {

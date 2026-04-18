@@ -75,10 +75,7 @@ async function changePassword(req, res, next) {
     }
 
     if (oldPassword === newPassword) {
-      throw errorResponder(
-        errorTypes.VALIDATION_ERROR,
-        'Same as old password'
-      );
+      throw errorResponder(errorTypes.VALIDATION_ERROR, 'Same as old password');
     }
 
     const hashed = await hashPassword(newPassword);
