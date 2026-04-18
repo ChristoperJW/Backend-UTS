@@ -4,7 +4,6 @@ const { hashPassword, passwordMatched } = require('../../../utils/password');
 const { generateToken } = require('../../../utils/jwt');
 const { errorResponder, errorTypes } = require('../../../core/errors');
 
-// ✅ REGISTER
 async function register(req, res, next) {
   try {
     const {
@@ -44,7 +43,6 @@ async function register(req, res, next) {
   }
 }
 
-// ✅ LOGIN
 async function login(req, res, next) {
   try {
     const { email, password } = req.body;
@@ -63,7 +61,6 @@ async function login(req, res, next) {
   }
 }
 
-// ✅ GET ME
 async function me(req, res, next) {
   try {
     const user = await authService.getUser(req.user.id);
