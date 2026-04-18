@@ -37,9 +37,14 @@ async function sendMessage(conversationId, senderId, text) {
   return newMessage.save();
 }
 
+async function deleteMessage(messageId, userId) {
+  return Message.deleteOne({ _id: messageId, senderId: userId });
+}
+
 module.exports = {
   getConversations,
   createConversation,
   getMessages,
   sendMessage,
+  deleteMessage,
 };

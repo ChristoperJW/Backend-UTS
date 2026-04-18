@@ -49,9 +49,29 @@ async function sendMessage(request, response, next) {
   }
 }
 
+async function deleteMessage(req, res) {
+  try {
+    const { messageId } = req.params;
+    const userId = req.user.id;
+
+    await conversationsService.removeMessage(messageId, userId);
+
+    res.status(200).json({
+      statusCode: 200,
+      message: 'Pesan berhasil dihapus',
+    });
+  } catch (error) {
+    res.status(400).json({
+      statusCode: 400,
+      message: error.message,
+    });
+  }
+}
+
 module.exports = {
   getConversations,
   createConversation,
   getMessages,
   sendMessage,
+  deleteMessage,
 };
