@@ -1,31 +1,36 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable consistent-return */
+/* eslint-disable prettier/prettier */
+/* eslint-disable import/no-unresolved */
 const jwt = require('jsonwebtoken');
+// Import dari config, jangan langsung dari process.env
+const { jwtSecret } = require('../core/config');
 
 function generateToken(payload) {
-  return jwt.sign(payload, process.env.JWT_SECRET);
+  // Pastikan variabel ada nilainya
+  if (!jwtSecret) {
+    throw new Error('JWT_SECRET is not defined in environment variables');
+  }
+  return jwt.sign(payload, jwtSecret);
 }
 
 function verifyToken(req, res, next) {
   try {
     const authHeader = req.headers.authorization;
-
     if (!authHeader) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
     const token = authHeader.split(' ')[1];
+    // Gunakan jwtSecret dari config
+    const decoded = jwt.verify(token, jwtSecret);
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    req.user = {
-      id: decoded.id,
-    };
-
+    req.user = { id: decoded.id };
     next();
   } catch (err) {
     return res.status(401).json({ message: 'Invalid token' });
   }
 }
-
 module.exports = {
   generateToken,
   verifyToken,

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const authService = require('./auth-service');
 const usersService = require('../users/users-service');
 const { hashPassword, passwordMatched } = require('../../../utils/password');
@@ -26,11 +27,17 @@ async function register(req, res, next) {
     }
 
     if (password.length < 8) {
-      throw errorResponder(errorTypes.VALIDATION_ERROR, 'Min 8 chars');
+      throw errorResponder(
+        errorTypes.VALIDATION_ERROR,
+        'Password must be at least 8 characters long'
+      );
     }
 
     if (password !== confirmPassword) {
-      throw errorResponder(errorTypes.VALIDATION_ERROR, 'Password not match');
+      throw errorResponder(
+        errorTypes.VALIDATION_ERROR,
+        'Password do not match'
+      );
     }
 
     const hashed = await hashPassword(password);

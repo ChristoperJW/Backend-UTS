@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable prefer-destructuring */
 const usersService = require('./users-service');
 const { errorResponder, errorTypes } = require('../../../core/errors');
@@ -5,7 +6,9 @@ const { hashPassword, passwordMatched } = require('../../../utils/password');
 
 async function getUsers(req, res, next) {
   try {
-    const users = await usersService.searchUsers(req.query);
+    const searchKeyword = req.query.search || '';
+
+    const users = await usersService.searchUsers(searchKeyword);
     return res.status(200).json(users);
   } catch (err) {
     return next(err);
