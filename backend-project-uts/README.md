@@ -1,6 +1,6 @@
 # LANGKAH YANG HARUS DIKERJAKAN
 
-1. Masukkan dulu endpoint yang harus dipakai di backend-project-uts/ src/routes.js
+1. Masukkan dulu endpoint yang harus dipakai di backend-project-uts/   src/routes.js
 
 2. Ubah dan tambahkan function serta folder untuk masing-masing routes di dalam routes.js
 
@@ -12,6 +12,6 @@
 
 6. Tambahan, backend-project-uts/utils diisi jika memang kita memerlukan fungsi khusus untuk melakukan suatu hal. Di contoh kemarin itu berfungsi untuk membandingkan hashed password dan normal password dan melakukan hash pada password
 
-7. Tambahkan dan kerjakan saja yang memang merupakan tugas kalian, saat kalian melakukan pull request, nanti merge akan disetujui oleh admin. Mergenya sendiri merupakan hasil gabungan yang ada di main _dan_ file kalian. Jika ada override, akan diperbaiki oleh admin.
+7. Tambahkan dan kerjakan saja yang memang merupakan tugas kalian, saat kalian melakukan pull request, nanti merge akan disetujui oleh admin. Mergenya sendiri merupakan hasil gabungan yang ada di main *dan* file kalian. Jika ada override, akan diperbaiki oleh admin.
 
 # ps, ada satu folder yang kurang di backend-project-uts. Entah apakah node_module diperlukan atau tidak, untuk itu sementara tidak ditambahkan dulu
