@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const express = require('express');
 const controller = require('./auth-controller');
 const { verifyToken } = require('../../../utils/jwt');
