@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const usersService = require('../users/users-service');
 
 async function register(email, password, fullName) {

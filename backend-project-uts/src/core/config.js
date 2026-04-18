@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const dotenv = require('dotenv');
 
 // Set the NODE_ENV to 'development' by default.
@@ -23,4 +24,5 @@ module.exports = {
     connection: process.env.DB_CONNECTION,
     name: process.env.DB_NAME,
   },
+  jwtSecret: process.env.JWT_SECRET,
 };

@@ -1,3 +1,6 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-return-await */
+/* eslint-disable prettier/prettier */
 const usersRepository = require('./users-repository');
 
 async function getUsers() {
@@ -33,12 +36,22 @@ async function changePassword(id, hashedPassword) {
   return usersRepository.changePassword(id, hashedPassword);
 }
 
-async function searchUsers(query) {
-  const { search = '' } = query;
-  const users = await getUsers();
+async function searchUsers(keyword) {
+  // 1. Ambil semua user menggunakan fungsi getUsers() yang sudah ada di repo
+  const allUsers = await usersRepository.getUsers();
 
-  return users.filter((user) =>
-    user.fullName.toLowerCase().includes(search.toLowerCase())
+  // 2. Jika tidak ada keyword, langsung kembalikan semua user
+  if (!keyword) {
+    return allUsers;
+  }
+
+  // 3. Sekarang aman untuk memanggil .toLowerCase() karena kita cek keyword dulu
+  const cleanKeyword = keyword.toLowerCase().trim();
+
+  // 4. Filter data secara manual di memori Node.js
+  return allUsers.filter(
+    (user) =>
+      user.fullName && user.fullName.toLowerCase().includes(cleanKeyword)
   );
 }
 

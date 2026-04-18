@@ -1,8 +1,9 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
 const { Users } = require('../../../models');
 
-async function getUsers() {
-  return Users.find({});
+async function getUsers(query = {}) {
+  return Users.find(query);
 }
 
 async function getUser(id) {
