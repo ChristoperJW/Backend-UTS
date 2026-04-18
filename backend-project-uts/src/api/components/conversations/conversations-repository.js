@@ -1,7 +1,4 @@
-const mongoose = require('mongoose');
-
-const Conversation = mongoose.model('Conversation');
-const Message = mongoose.model('Message');
+const { Conversation, Message } = require('../../../models');
 
 async function getConversations(userId) {
   return Conversation.find({ participants: userId }).populate(

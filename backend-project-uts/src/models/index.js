@@ -11,12 +11,12 @@ db.once('open', () => {
   console.log(`Connected to MongoDB: ${databaseUri}`);
 });
 
-const User = require('./users-schema')(mongoose);
+const Users = require('./users-schema')(mongoose);
 const Conversation = require('./conversations-schema')(mongoose);
 const Message = require('./messages-schema')(mongoose);
 
 module.exports = {
-  User,
+  Users,
   Conversation,
   Message,
 };
