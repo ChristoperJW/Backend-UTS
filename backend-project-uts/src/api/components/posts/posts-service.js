@@ -18,13 +18,14 @@ async function deletePost(postId, userId) {
 
   if (!post) return null;
 
-  if (post.userId.toString() !== userId) {
+  // eslint-disable-next-line no-underscore-dangle
+  if (post.userId._id.toString() !== userId.toString()) {
     throw errorResponder(errorTypes.FORBIDDEN, 'Not your post');
   }
 
   const result = await postRepository.deletePost(postId);
 
-  return result.deleteCount > 0;
+  return result.deletedCount > 0;
 }
 
 async function likePost(userId, postId) {
