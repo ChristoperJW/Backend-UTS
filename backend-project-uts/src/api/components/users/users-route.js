@@ -1,27 +1,29 @@
 const express = require('express');
-
 const usersController = require('./users-controller');
+const { verifyToken } = require('../../../utils/jwt');
 
 const route = express.Router();
 
 module.exports = (app) => {
   app.use('/users', route);
 
-  // Get list of users
   route.get('/', usersController.getUsers);
 
-  // Create a new user
-  route.post('/', usersController.createUser);
-
-  // Get user detail
   route.get('/:id', usersController.getUser);
 
-  // Update user
-  route.put('/:id', usersController.updateUser);
+  route.put('/:id', verifyToken, usersController.updateUser);
 
-  // Change password
-  route.put('/:id/change-password', usersController.changePassword);
+  route.put(
+    '/:id/change-password',
+    verifyToken,
+    usersController.changePassword
+  );
 
-  // Delete user
-  route.delete('/:id', usersController.deleteUser);
+  route.post('/:id/follow', verifyToken, usersController.followUser);
+
+  route.post('/:id/unfollow', verifyToken, usersController.unfollowUser);
+
+  route.get('/:id/followers', usersController.getFollowers);
+
+  route.get('/:id/following', usersController.getFollowing);
 };

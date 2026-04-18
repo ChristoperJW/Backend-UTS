@@ -1,15 +1,13 @@
 const express = require('express');
 
+const books = require('./components/books/books-route');
 const users = require('./components/users/users-route');
-const auth = require('./components/auth/auth-route');
-const conversations = require('./components/conversations/conversations-route');
 
 module.exports = () => {
   const app = express.Router();
 
+  books(app);
   users(app);
-  auth(app);
-  conversations(app);
 
   return app;
 };

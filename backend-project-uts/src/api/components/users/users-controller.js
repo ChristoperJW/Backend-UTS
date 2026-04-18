@@ -1,201 +1,136 @@
+/* eslint-disable prefer-destructuring */
 const usersService = require('./users-service');
 const { errorResponder, errorTypes } = require('../../../core/errors');
-const { hashPassword } = require('../../../utils/password');
+const { hashPassword, passwordMatched } = require('../../../utils/password');
 
-async function getUsers(request, response, next) {
+async function getUsers(req, res, next) {
   try {
-    const users = await usersService.getUsers();
-
-    return response.status(200).json(users);
-  } catch (error) {
-    return next(error);
+    const users = await usersService.searchUsers(req.query);
+    return res.status(200).json(users);
+  } catch (err) {
+    return next(err);
   }
 }
 
-async function getUser(request, response, next) {
+async function getUser(req, res, next) {
   try {
-    const user = await usersService.getUser(request.params.id);
+    const user = await usersService.getUser(req.params.id);
 
     if (!user) {
       throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'User not found');
     }
 
-    return response.status(200).json(user);
-  } catch (error) {
-    return next(error);
+    return res.status(200).json(user);
+  } catch (err) {
+    return next(err);
   }
 }
 
-async function createUser(request, response, next) {
+async function updateUser(req, res, next) {
   try {
+    const { email, full_name: fullName } = req.body;
+
+    const user = await usersService.getUser(req.params.id);
+    if (!user) {
+      throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'User not found');
+    }
+
+    await usersService.updateUser(req.params.id, email, fullName);
+
+    return res.status(200).json({ message: 'Updated successfully' });
+  } catch (err) {
+    return next(err);
+  }
+}
+
+async function changePassword(req, res, next) {
+  try {
+    const user = await usersService.getUser(req.params.id);
+
     const {
-      email,
-      password,
-      full_name: fullName,
-      confirm_password: confirmPassword,
-    } = request.body;
+      old_password: oldPassword,
+      new_password: newPassword,
+      confirm_new_password: confirmNewPassword,
+    } = req.body;
 
-    // Email is required and cannot be empty
-    if (!email) {
-      throw errorResponder(errorTypes.VALIDATION_ERROR, 'Email is required');
-    }
-
-    // Full name is required and cannot be empty
-    if (!fullName) {
-      throw errorResponder(
-        errorTypes.VALIDATION_ERROR,
-        'Full name is required'
-      );
-    }
-
-    // Email must be unique
-    if (await usersService.emailExists(email)) {
-      throw errorResponder(
-        errorTypes.EMAIL_ALREADY_TAKEN,
-        'Email already exists'
-      );
-    }
-
-    // The password is at least 8 characters long
-    if (password.length < 8) {
-      throw errorResponder(
-        errorTypes.VALIDATION_ERROR,
-        'Password must be at least 8 characters long'
-      );
-    }
-
-    // The password and confirm password must match
-    if (password !== confirmPassword) {
-      throw errorResponder(
-        errorTypes.VALIDATION_ERROR,
-        'Password and confirm password do not match'
-      );
-    }
-
-    // Hash the password before saving it to the database
-    const hashedPassword = await hashPassword(password);
-
-    // Create the user
-    const success = await usersService.createUser(
-      email,
-      hashedPassword,
-      fullName
-    );
-
-    if (!success) {
-      throw errorResponder(
-        errorTypes.UNPROCESSABLE_ENTITY,
-        'Failed to create user'
-      );
-    }
-
-    return response.status(201).json({ message: 'User created successfully' });
-  } catch (error) {
-    return next(error);
-  }
-}
-
-async function updateUser(request, response, next) {
-  try {
-    const { email, full_name: fullName } = request.body;
-
-    // User must exist
-    const user = await usersService.getUser(request.params.id);
     if (!user) {
       throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'User not found');
     }
 
-    // Email is required and cannot be empty
-    if (!email) {
-      throw errorResponder(errorTypes.VALIDATION_ERROR, 'Email is required');
+    // 🔥 SECURITY: hanya user sendiri
+    if (req.user.id !== req.params.id) {
+      throw errorResponder(errorTypes.FORBIDDEN, 'Unauthorized');
     }
 
-    // Full name is required and cannot be empty
-    if (!fullName) {
-      throw errorResponder(
-        errorTypes.VALIDATION_ERROR,
-        'Full name is required'
-      );
+    if (!(await passwordMatched(oldPassword, user.password))) {
+      throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Wrong password');
     }
 
-    // Email must be unique, if it is changed
-    if (email !== user.email && (await usersService.emailExists(email))) {
-      throw errorResponder(
-        errorTypes.EMAIL_ALREADY_TAKEN,
-        'Email already exists'
-      );
+    if (newPassword.length < 8) {
+      throw errorResponder(errorTypes.VALIDATION_ERROR, 'Min 8 chars');
     }
 
-    const success = await usersService.updateUser(
-      request.params.id,
-      email,
-      fullName
-    );
-
-    if (!success) {
-      throw errorResponder(
-        errorTypes.UNPROCESSABLE_ENTITY,
-        'Failed to update user'
-      );
+    if (newPassword !== confirmNewPassword) {
+      throw errorResponder(errorTypes.VALIDATION_ERROR, 'Not match');
     }
 
-    return response.status(200).json({ message: 'User updated successfully' });
-  } catch (error) {
-    return next(error);
+    if (oldPassword === newPassword) {
+      throw errorResponder(errorTypes.VALIDATION_ERROR, 'Same as old password');
+    }
+
+    const hashed = await hashPassword(newPassword);
+
+    await usersService.changePassword(user.id, hashed);
+
+    return res.json({ message: 'Password updated' });
+  } catch (err) {
+    return next(err);
   }
 }
 
-async function changePassword(request, response, next) {
-  // TODO: Implement this function
-  // const id = request.params.id;
-  // const {
-  //   old_password: oldPassword,
-  //   new_password: newPassword,
-  //   confirm_new_password: confirmNewPassword,
-  // } = request.body;
-  //
-  // Make sure that:
-  // - the user exists by checking the user ID
-  // - the old password is correct
-  // - the new password is at least 8 characters long
-  // - the new password is different from the old password
-  // - the new password and confirm new password match
-  //
-  // Note that the password is hashed in the database, so you need to
-  // compare the hashed password with the old password. Use the passwordMatched
-  // function from src/utils/password.js to compare the old password with the
-  // hashed password.
-  //
-  // If any of the conditions above is not met, return an error response
-  // with the appropriate status code and message.
-  //
-  // If all conditions are met, update the user's password and return
-  // a success response.
-  return next(errorResponder(errorTypes.NOT_IMPLEMENTED));
+async function followUser(req, res, next) {
+  try {
+    await usersService.followUser(req.user.id, req.params.id);
+    res.json({ message: 'Followed' });
+  } catch (err) {
+    next(err);
+  }
 }
 
-async function deleteUser(request, response, next) {
+async function unfollowUser(req, res, next) {
   try {
-    const success = await usersService.deleteUser(request.params.id);
+    await usersService.unfollowUser(req.user.id, req.params.id);
+    res.json({ message: 'Unfollowed' });
+  } catch (err) {
+    next(err);
+  }
+}
 
-    if (!success) {
-      throw errorResponder(
-        errorTypes.UNPROCESSABLE_ENTITY,
-        'Failed to delete user'
-      );
-    }
+async function getFollowers(req, res, next) {
+  try {
+    const data = await usersService.getFollowers(req.params.id);
+    res.json(data);
+  } catch (err) {
+    next(err);
+  }
+}
 
-    return response.status(200).json({ message: 'User deleted successfully' });
-  } catch (error) {
-    return next(error);
+async function getFollowing(req, res, next) {
+  try {
+    const data = await usersService.getFollowing(req.params.id);
+    res.json(data);
+  } catch (err) {
+    next(err);
   }
 }
 
 module.exports = {
   getUsers,
   getUser,
-  createUser,
   updateUser,
   changePassword,
-  deleteUser,
+  followUser,
+  unfollowUser,
+  getFollowers,
+  getFollowing,
 };

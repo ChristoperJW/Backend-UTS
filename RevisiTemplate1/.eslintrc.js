@@ -10,7 +10,8 @@ module.exports = {
     ecmaVersion: 'latest',
   },
   rules: {
-    'prettier/prettier': ['error'],
-    'no-console': 'off',
+    'prettier/prettier': ['warn'],
+    'no-unused-vars': 'warn',
+    'no-console': 'off', // Completely disable
   },
 };

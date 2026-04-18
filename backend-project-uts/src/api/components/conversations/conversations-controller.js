@@ -1,0 +1,57 @@
+const conversationsService = require('./conversations-service');
+
+async function getConversations(request, response, next) {
+  try {
+    const userId = request.user.id;
+    const conversations = await conversationsService.getConversations(userId);
+    return response.status(200).json(conversations);
+  } catch (error) {
+    return next(error);
+  }
+}
+
+async function createConversation(request, response, next) {
+  try {
+    const senderId = request.user.id;
+    const { receiverId } = request.body;
+    const conversation = await conversationsService.createConversation(
+      senderId,
+      receiverId
+    );
+    return response.status(201).json(conversation);
+  } catch (error) {
+    return next(error);
+  }
+}
+
+async function getMessages(request, response, next) {
+  try {
+    const { id } = request.params;
+    const messages = await conversationsService.getMessages(id);
+    return response.status(200).json(messages);
+  } catch (error) {
+    return next(error);
+  }
+}
+
+async function sendMessage(request, response, next) {
+  try {
+    const senderId = request.user.id;
+    const { conversationId, text } = request.body;
+    const newMessage = await conversationsService.sendMessage(
+      conversationId,
+      senderId,
+      text
+    );
+    return response.status(201).json(newMessage);
+  } catch (error) {
+    return next(error);
+  }
+}
+
+module.exports = {
+  getConversations,
+  createConversation,
+  getMessages,
+  sendMessage,
+};

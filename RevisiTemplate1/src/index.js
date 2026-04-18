@@ -1,10 +1,8 @@
-require('dotenv').config();
-
-const app = require('./core/server');
 const { env, port } = require('./core/config');
 const logger = require('./core/logger')('app');
+const server = require('./core/server');
 
-const server = app.listen(port, (err) => {
+const app = server.listen(port, (err) => {
   if (err) {
     logger.fatal(err, 'Failed to start the server.');
     process.exit(1);
@@ -16,8 +14,11 @@ const server = app.listen(port, (err) => {
 process.on('uncaughtException', (err) => {
   logger.fatal(err, 'Uncaught exception.');
 
-  // Shutdown gracefully
-  server.close(() => process.exit(1));
+  // Shutdown the server gracefully
+  app.close(() => process.exit(1));
 
+  // If a graceful shutdown is not achieved after 1 second,
+  // shut down the process completely
   setTimeout(() => process.abort(), 1000).unref();
+  process.exit(1);
 });

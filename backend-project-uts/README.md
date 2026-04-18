@@ -1,57 +1,17 @@
-# Backend Programming Template (2025)
+# LANGKAH YANG HARUS DIKERJAKAN
 
-## Development Setup
+1. Masukkan dulu endpoint yang harus dipakai di backend-project-uts/ src/routes.js
 
-1. Fork and clone this repository to your local computer.
-2. Open the project using VS Code.
-3. Install the recommended VS Code extensions: `ESLint` and `Prettier`.
-4. Copy and rename `.env.example` to `.env`. Open `.env` and change the database connection string.
-5. Run `npm install` to install the project dependencies.
-6. Run `npm run dev` to start the dev server.
-7. Test the endpoints in the API client app.
+2. Ubah dan tambahkan function serta folder untuk masing-masing routes di dalam routes.js
 
-## Add New API Endpoints
+3. Tambahkan bentuk skema yang harus dibuat dalam database di backend-project-uts/models/
 
-1. Create a new database schema in `./src/models`.
-2. Create a new folder in `./src/api/components` (if needed). Remember to separate your codes to repositories, services, controllers, and routes.
-3. Add the new route in `./src/api/routes.js`.
-4. Test your new endpoints in the API client app.
+4. Jika lupa cara melakukan langkah 1 - 3, lihat contoh yang ada di RevisiTemplate1 (atau RevisiTemplate2, menyusul)
 
-## Gacha API Endpoints
+5. Sesudah berhasil melakukan langkah 1 - 3 jangan sampai lupa melakukan import dan export agar dapat dijalankan
 
-### Perform Gacha
+6. Tambahan, backend-project-uts/utils diisi jika memang kita memerlukan fungsi khusus untuk melakukan suatu hal. Di contoh kemarin itu berfungsi untuk membandingkan hashed password dan normal password dan melakukan hash pada password
 
-- **Endpoint**: `POST /api/gacha`
-- **Description**: Perform a gacha draw. User can do up to 5 draws per day.
-- **Request Body**:
-  ```json
-  {
-    "userId": "string"
-  }
-  ```
-- **Response**:
-  ```json
-  {
-    "success": true,
-    "prize": "Emas 10 gram" // or "No prize won"
-  }
-  ```
-- **Error**: 422 if daily limit exceeded.
+7. Tambahkan dan kerjakan saja yang memang merupakan tugas kalian, saat kalian melakukan pull request, nanti merge akan disetujui oleh admin. Mergenya sendiri merupakan hasil gabungan yang ada di main _dan_ file kalian. Jika ada override, akan diperbaiki oleh admin.
 
-### Get Gacha History
-
-- **Endpoint**: `GET /api/gacha/history/:userId`
-- **Description**: Get the history of gacha attempts for a user.
-- **Response**: Array of attempts with date and prize.
-
-### Get Prizes Status
-
-- **Endpoint**: `GET /api/gacha/prizes`
-- **Description**: Get the list of prizes and remaining quota.
-- **Response**: Array of prizes with name and remainingQuota.
-
-### Get Winners
-
-- **Endpoint**: `GET /api/gacha/winners`
-- **Description**: Get the list of winners for each prize, with masked names.
-- **Response**: Object with prize names as keys and array of masked names as values.
+# ps, ada satu folder yang kurang di backend-project-uts. Entah apakah node_module diperlukan atau tidak, untuk itu sementara tidak ditambahkan dulu
