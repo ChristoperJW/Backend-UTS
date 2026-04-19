@@ -26,10 +26,25 @@ async function removeMessage(messageId, userId) {
   return deleted;
 }
 
+async function removeFullConversation(conversationId, userId) {
+  const deletedConversation = await conversationsRepository.deleteConversation(
+    conversationId,
+    userId
+  );
+  if (!deletedConversation) {
+    throw new Error(
+      'Percakapan tidak ditemukan atau Anda tidak memiliki akses'
+    );
+  }
+  await conversationsRepository.deleteMessagesByConversationId(conversationId);
+  return deletedConversation;
+}
+
 module.exports = {
   getConversations,
   createConversation,
   getMessages,
   sendMessage,
+  removeFullConversation,
   removeMessage,
 };

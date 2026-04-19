@@ -68,10 +68,30 @@ async function deleteMessage(req, res) {
   }
 }
 
+async function deleteConversation(req, res) {
+  try {
+    const { id } = req.params;
+    const userId = req.user.id;
+
+    await conversationsService.removeFullConversation(id, userId);
+
+    res.status(200).json({
+      statusCode: 200,
+      message: 'Seluruh percakapan dan pesan terkait berhasil dihapus',
+    });
+  } catch (error) {
+    res.status(400).json({
+      statusCode: 400,
+      message: error.message,
+    });
+  }
+}
+
 module.exports = {
   getConversations,
   createConversation,
   getMessages,
   sendMessage,
   deleteMessage,
+  deleteConversation,
 };
