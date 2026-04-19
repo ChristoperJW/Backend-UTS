@@ -15,3 +15,35 @@
 7. Tambahkan dan kerjakan saja yang memang merupakan tugas kalian, saat kalian melakukan pull request, nanti merge akan disetujui oleh admin. Mergenya sendiri merupakan hasil gabungan yang ada di main *dan* file kalian. Jika ada override, akan diperbaiki oleh admin.
 
 # ps, ada satu folder yang kurang di backend-project-uts. Entah apakah node_module diperlukan atau tidak, untuk itu sementara tidak ditambahkan dulu
+
+## Dari Monica
+Bisa langsung get karena udh pake seed, kalau mau tes jalanin "npm run seed" baru "npm run dev". Localhost: 5000. Nama database: Postify
+
+Endpoint yang dibuat disini:
+- GET /feeds
+- POST /posts/:id/comments
+- GET /posts/:id/comments
+- GET /comments
+- DELETE /comments/:id
+- POST /posts
+- GET /posts
+
+1. Kalau mau POST /post, isi body wajib
+
+{
+
+  "username": "isi",
+
+  "post": "isi",
+
+  "caption": "isi"
+
+}
+
+2. Kalau mau POST /posts/:id/comments, isi body wajib
+
+{
+
+  "comment": "isi",
+
+}

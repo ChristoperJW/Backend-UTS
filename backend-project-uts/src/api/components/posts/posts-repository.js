@@ -1,4 +1,4 @@
-const { Posts, Likes } = require('../../../models');
+const { Posts, Likes, Comments } = require('../../../models');
 
 async function getPosts(userId, search) {
   const filter = {};
@@ -36,6 +36,28 @@ async function unlikePost(userId, postId) {
   return Likes.deleteOne({ userId, postId });
 }
 
+async function createPost({ username, post, caption }) {
+  const newPost = await Posts.create({ username, post, caption });
+  return newPost;
+}
+
+async function getAllPost() {
+  return Posts.find({});
+}
+
+async function createComment({ postId, comment }) {
+  const post = await Posts.findById(postId); // simpan dulu ke variable
+  if (!post) {
+    throw new Error('Post tidak ditemukan!');
+  }
+
+  return Comments.create({ postId, comment });
+}
+
+async function getCommentsByPostId(postId) {
+  return Comments.find({ postId });
+}
+
 module.exports = {
   getPosts,
   getPost,
@@ -43,4 +65,8 @@ module.exports = {
   deletePost,
   likePost,
   unlikePost,
+  createPost,
+  getAllPost,
+  createComment,
+  getCommentsByPostId,
 };
