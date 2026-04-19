@@ -11,6 +11,7 @@ module.exports = (app) => {
   route.post('/', verifyToken, conversationsController.createConversation);
   route.get('/:id/messages', verifyToken, conversationsController.getMessages);
   route.post('/messages', verifyToken, conversationsController.sendMessage);
+  route.delete('/:id', verifyToken, conversationsController.deleteConversation);
   route.delete(
     '/messages/:messageId',
     verifyToken,
