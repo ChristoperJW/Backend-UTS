@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
-
-const { Conversation, Likes, Message, Posts, Users } = require('./models');
+/* eslint-disable prettier/prettier */
+const { Conversation, Likes, Message, Posts, Users, Comments } = require('./models');
 const { hashPassword } = require('./utils/password');
 
 const seedDatabase = async () => {
@@ -44,11 +44,39 @@ const seedDatabase = async () => {
     ]);
 
     const createdPosts = await Posts.insertMany([
-      { caption: 'Hello World!', userId: createdUsers[0]._id },
-      { caption: 'My first post!', userId: createdUsers[1]._id },
-      { caption: 'Enjoying the day!', userId: createdUsers[2]._id },
-      { caption: 'Having fun with friends!', userId: createdUsers[3]._id },
-      { caption: 'Life is beautiful!', userId: createdUsers[4]._id },
+    {
+    username: 'christoper',
+    post: 'New year picture',
+    caption: 'Happy New Year',
+    },
+    {
+    username: 'louise',
+    post: 'citylight',
+    caption: 'beautiful city',
+    },
+    {
+    username: 'angga',
+    post: 'tennis image',
+    caption: 'tennis time',
+    },
+    {
+    username: 'michael',
+    post: 'basketball image',
+    caption: 'basket time',
+    },
+    {
+    username: 'monica',
+    post: 'selfie',
+    caption: 'what a nice day',
+    },
+    ]);
+
+    await Comments.insertMany([
+    { postId: createdPosts[0]._id, comment: 'Selamat tahun baru!' },
+    { postId: createdPosts[0]._id, comment: 'Wah keren fotonya!' },
+    { postId: createdPosts[1]._id, comment: 'Indah banget kotanya' },
+    { postId: createdPosts[2]._id, comment: 'Ayo main tennis bareng!' },
+    { postId: createdPosts[3]._id, comment: 'Seru banget nih!' },
     ]);
 
     const createdConversations = await Conversation.insertMany([
@@ -94,6 +122,8 @@ const seedDatabase = async () => {
       { userId: createdUsers[3]._id, postId: createdPosts[2]._id },
       { userId: createdUsers[4]._id, postId: createdPosts[4]._id },
     ]);
+
+    await 
 
     console.log('Database seeding completed successfully!');
   } catch (error) {
