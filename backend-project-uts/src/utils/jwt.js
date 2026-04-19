@@ -22,7 +22,6 @@ function verifyToken(req, res, next) {
     }
 
     const token = authHeader.split(' ')[1];
-    // Gunakan jwtSecret dari config
     const decoded = jwt.verify(token, jwtSecret);
 
     req.user = { id: decoded.id };
