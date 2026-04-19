@@ -1,15 +1,5 @@
 const conversationsService = require('./conversations-service');
 
-async function getConversations(request, response, next) {
-  try {
-    const userId = request.user.id;
-    const conversations = await conversationsService.getConversations(userId);
-    return response.status(200).json(conversations);
-  } catch (error) {
-    return next(error);
-  }
-}
-
 async function createConversation(request, response, next) {
   try {
     const senderId = request.user.id;
@@ -88,7 +78,6 @@ async function deleteConversation(req, res) {
 }
 
 module.exports = {
-  getConversations,
   createConversation,
   getMessages,
   sendMessage,
