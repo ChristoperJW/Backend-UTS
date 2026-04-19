@@ -3,6 +3,14 @@ module.exports = (db) =>
     'Posts',
     db.Schema(
       {
+        username: {
+          type: String,
+          required: true,
+        },
+        post: {
+          type: String,
+          required: true,
+        },
         caption: {
           type: String,
           required: true,

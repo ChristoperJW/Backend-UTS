@@ -21,4 +21,12 @@ module.exports = (app) => {
   route.post('/:id/like', verifyToken, postsController.likePost);
 
   route.delete('/:id/like', verifyToken, postsController.unlikePost);
+
+  route.post('/', postsController.createPost);
+  
+  route.get('/', postsController.getAllPost);
+  
+  route.get('/:id/comments', postsController.getCommentsByPostId);
+  
+  route.post('/:id/comments', postsController.postCommentByPostId);
 };

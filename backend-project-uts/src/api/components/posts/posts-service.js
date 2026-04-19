@@ -36,6 +36,27 @@ async function unlikePost(userId, postId) {
   return postRepository.unlikePost(userId, postId);
 }
 
+async function createPost({ username, post, caption }) {
+  const newPost = await postsRepository.createPost({
+    username,
+    post,
+    caption,
+  });
+  return newPost;
+}
+
+async function getAllPost() {
+  return postsRepository.getAllPost({});
+}
+
+async function postCommentByPostId({ postId, comment }) {
+  return postsRepository.createComment({ postId, comment });
+}
+
+async function getCommentsByPostId(postId) {
+  return postsRepository.getCommentsByPostId(postId);
+}
+
 module.exports = {
   getPosts,
   getPost,
@@ -43,4 +64,8 @@ module.exports = {
   deletePost,
   likePost,
   unlikePost,
+  createPost,
+  getAllPost,
+  postCommentByPostId,
+  getCommentsByPostId,
 };

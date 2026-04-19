@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "nodemon ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "eslint": "eslint src/**"
+    "eslint": "eslint src/**",
+    "seed": "node src/seeders/seeder.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
