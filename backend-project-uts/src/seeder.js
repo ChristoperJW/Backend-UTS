@@ -17,29 +17,29 @@ const seedDatabase = async () => {
 
     const createdUsers = await Users.insertMany([
       {
-        email: 'Agus123@gmail.com',
-        password: await hashPassword('bruh1234'),
-        fullName: 'Agus Jabrik',
+        email: 'Angga123@gmail.com',
+        password: await hashPassword('anggay1234'),
+        fullName: 'Angga Johanes Thesman',
       },
       {
-        email: 'BudiAnakBaik@gmail.com',
-        password: await hashPassword('BudiAnakBaikBaik123'),
-        fullName: 'Budi Sanjaya',
+        email: 'CJW2233@gmail.com',
+        password: await hashPassword('cjwanakBaikBaik123'),
+        fullName: 'Christoper Julian Wijaya',
       },
       {
-        email: 'CitraPutri@gmail.com',
-        password: await hashPassword('CitraPutri123'),
-        fullName: 'Citra Putri',
+        email: 'LouiseWilliam@gmail.com',
+        password: await hashPassword('Louise1234'),
+        fullName: 'Louise William',
       },
       {
-        email: 'DewiSartika@gmail.com',
-        password: await hashPassword('DewiSartika123'),
-        fullName: 'Dewi Sartika',
+        email: 'MichaelRSH@gmail.com',
+        password: await hashPassword('Michael1234'),
+        fullName: 'Michael Respati Sanjaya Ho',
       },
       {
-        email: 'EkoPrasetyo@gmail.com',
-        password: await hashPassword('EkoPrasetyo123'),
-        fullName: 'Eko Prasetyo',
+        email: 'MonicaIrene@gmail.com',
+        password: await hashPassword('Monica123'),
+        fullName: 'Monica Irene',
       },
     ]);
 
@@ -63,27 +63,27 @@ const seedDatabase = async () => {
       {
         conversationId: createdConversations[0]._id,
         senderId: createdUsers[0]._id,
-        text: 'Hi Budi!',
+        text: 'Hi Christopher!',
       },
       {
         conversationId: createdConversations[0]._id,
         senderId: createdUsers[1]._id,
-        text: 'Hello Agus!',
+        text: 'Hello Michael!',
       },
       {
         conversationId: createdConversations[1]._id,
         senderId: createdUsers[1]._id,
-        text: 'Hey Citra!',
+        text: 'Hey Angga!',
       },
       {
         conversationId: createdConversations[1]._id,
         senderId: createdUsers[2]._id,
-        text: 'Hi Budi!',
+        text: 'Hi Louise!',
       },
       {
         conversationId: createdConversations[2]._id,
         senderId: createdUsers[2]._id,
-        text: 'Hello Dewi!',
+        text: 'Hello Monica!',
       },
     ]);
 
