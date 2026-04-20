@@ -18,7 +18,7 @@ function verifyToken(req, res, next) {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
-      return res.status(401).json({ message: 'Unauthorized' });
+      return res.status(401).json({ message: 'Harap mengisi token terlebih dahulu' });
     }
 
     const token = authHeader.split(' ')[1];

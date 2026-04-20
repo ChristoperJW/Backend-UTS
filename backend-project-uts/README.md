@@ -16,34 +16,46 @@
 
 # ps, ada satu folder yang kurang di backend-project-uts. Entah apakah node_module diperlukan atau tidak, untuk itu sementara tidak ditambahkan dulu
 
-## Dari Monica
-Bisa langsung get karena udh pake seed, kalau mau tes jalanin "npm run seed" baru "npm run dev". Localhost: 5000. Nama database: Postify
-
-Endpoint yang dibuat disini:
-- GET /feeds
-- POST /posts/:id/comments
-- GET /posts/:id/comments
-- GET /comments
-- DELETE /comments/:id
-- POST /posts
-- GET /posts
-
-1. Kalau mau POST /post, isi body wajib
-
+POST /auth/register
+request body:
 {
 
-  "username": "isi",
+    "email": "isi",
 
-  "post": "isi",
+    "full_name": "isi",
 
-  "caption": "isi"
+    "password": "isi",
+
+    "confirm_password": "isi"
 
 }
 
-2. Kalau mau POST /posts/:id/comments, isi body wajib
+POST /auth/login
+
+request body:
 
 {
 
-  "comment": "isi",
+    "email": "isi",
+
+    "password": "isi"
+    
+}
+
+(jangan lupa insert token)
+
+
+POST /posts
+
+request body:
+
+{
+
+    "caption": "isi",
+
+    "media": "isi",
 
 }
+
+Sistem kerja Feeds = mengambil 3 postingan secara random yang ada di dalam database.
+Semua kode monic gapake token karena hanya mengambil feeds secara umum dan setiap akun kan bisa komen

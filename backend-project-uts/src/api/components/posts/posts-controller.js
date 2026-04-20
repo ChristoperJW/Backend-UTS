@@ -46,7 +46,7 @@ async function createPost(request, response, next) {
       );
     }
 
-    return response.status(201).json({ message: 'Post created successfully' });
+    return response.status(201).json(post);
   } catch (error) {
     return next(error);
   }

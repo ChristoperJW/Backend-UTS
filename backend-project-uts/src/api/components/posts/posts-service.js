@@ -1,20 +1,20 @@
-const postRepository = require('./posts-repository');
+const postsRepository = require('./posts-repository');
 const { errorResponder, errorTypes } = require('../../../core/errors');
 
 async function getPosts(userId, search) {
-  return postRepository.getPosts(userId, search);
+  return postsRepository.getPosts(userId, search);
 }
 
 async function getPost(postId) {
-  return postRepository.getPost(postId);
+  return postsRepository.getPost(postId);
 }
 
 async function createPost(caption, media, userId) {
-  return postRepository.createPost(caption, media, userId);
+  return postsRepository.createPost(caption, media, userId);
 }
 
 async function deletePost(postId, userId) {
-  const post = await postRepository.getPost(postId);
+  const post = await postsRepository.getPost(postId);
 
   if (!post) return null;
 
@@ -23,30 +23,17 @@ async function deletePost(postId, userId) {
     throw errorResponder(errorTypes.FORBIDDEN, 'Not your post');
   }
 
-  const result = await postRepository.deletePost(postId);
+  const result = await postsRepository.deletePost(postId);
 
   return result.deletedCount > 0;
 }
 
 async function likePost(userId, postId) {
-  return postRepository.likePost(userId, postId);
+  return postsRepository.likePost(userId, postId);
 }
 
 async function unlikePost(userId, postId) {
-  return postRepository.unlikePost(userId, postId);
-}
-
-// async function createPost({ username, post, caption }) {
-//   const newPost = await postsRepository.createPost({
-//     username,
-//     post,
-//     caption,
-//   });
-//   return newPost;
-// }
-
-async function getAllPost() {
-  return postRepository.getAllPost({});
+  return postsRepository.unlikePost(userId, postId);
 }
 
 async function postCommentByPostId({ postId, comment }) {
@@ -64,8 +51,6 @@ module.exports = {
   deletePost,
   likePost,
   unlikePost,
-  // createPost,
-  getAllPost,
   postCommentByPostId,
   getCommentsByPostId,
 };

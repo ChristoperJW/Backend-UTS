@@ -13,12 +13,13 @@ const seedDatabase = async () => {
       Message.deleteMany({}),
       Posts.deleteMany({}),
       Users.deleteMany({}),
+      Comments.deleteMany({}),
     ]);
 
     const createdUsers = await Users.insertMany([
       {
         email: 'Angga123@gmail.com',
-        password: await hashPassword('anggay1234'),
+        password: await hashPassword('angga1234'),
         fullName: 'Angga Johanes Thesman',
       },
       {
@@ -45,28 +46,28 @@ const seedDatabase = async () => {
 
     const createdPosts = await Posts.insertMany([
     {
-    username: 'christoper',
-    post: 'New year picture',
+    userId: createdUsers[1]._id,
+    media: 'New year picture',
     caption: 'Happy New Year',
     },
     {
-    username: 'louise',
-    post: 'citylight',
+    userId: createdUsers[2]._id,
+    media: 'citylight',
     caption: 'beautiful city',
     },
     {
-    username: 'angga',
-    post: 'tennis image',
+    userId: createdUsers[0]._id,
+    media: 'tennis image',
     caption: 'tennis time',
     },
     {
-    username: 'michael',
-    post: 'basketball image',
+    userId: createdUsers[3]._id,
+    media: 'basketball image',
     caption: 'basket time',
     },
     {
-    username: 'monica',
-    post: 'selfie',
+    userId: createdUsers[4]._id,
+    media: 'selfie',
     caption: 'what a nice day',
     },
     ]);
@@ -122,8 +123,6 @@ const seedDatabase = async () => {
       { userId: createdUsers[3]._id, postId: createdPosts[2]._id },
       { userId: createdUsers[4]._id, postId: createdPosts[4]._id },
     ]);
-
-    await 
 
     console.log('Database seeding completed successfully!');
   } catch (error) {
