@@ -34,8 +34,25 @@ async function updateUser(req, res, next) {
     const { email, full_name: fullName } = req.body;
 
     const user = await usersService.getUser(req.params.id);
+
     if (!user) {
       throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'User not found');
+    }
+
+    if (req.user.id !== req.params.id) {
+      throw errorResponder(errorTypes.FORBIDDEN, 'Unauthorized');
+    }
+
+    if (!email) {
+      throw errorResponder(errorTypes.VALIDATION_ERROR, 'Email is required');
+    }
+
+    if (!fullName) {
+      throw errorResponder(errorTypes.VALIDATION_ERROR, 'Full name is required');
+    }
+
+    if (email !== user.email && (await usersService.emailExists(email))) {
+      throw errorResponder(errorTypes.EMAIL_ALREADY_TAKEN, 'Email exists');
     }
 
     await usersService.updateUser(req.params.id, email, fullName);
@@ -90,6 +107,29 @@ async function changePassword(req, res, next) {
   }
 }
 
+async function deleteUser(request, response, next) {
+  try {
+    if (request.user.id !== request.params.id) {
+      throw errorResponder(errorTypes.FORBIDDEN, 'Unauthorized');
+    }
+
+    const success = await usersService.deleteUser(request.params.id);
+
+    if (!success) {
+      throw errorResponder(
+        errorTypes.UNPROCESSABLE_ENTITY,
+        'Failed to delete user'
+      );
+    }
+
+    return response
+      .status(200)
+      .json({ message: 'User deleted successfully' });
+  } catch (error) {
+    return next(error);
+  }
+}
+
 async function followUser(req, res, next) {
   try {
     await usersService.followUser(req.user.id, req.params.id);
@@ -131,6 +171,7 @@ module.exports = {
   getUser,
   updateUser,
   changePassword,
+  deleteUser,
   followUser,
   unfollowUser,
   getFollowers,

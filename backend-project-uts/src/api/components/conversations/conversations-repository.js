@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const { Conversation, Message } = require('../../../models');
 
 async function getConversations(userId) {
@@ -41,10 +42,24 @@ async function deleteMessage(messageId, userId) {
   return Message.deleteOne({ _id: messageId, senderId: userId });
 }
 
+async function deleteConversation(conversationId, userId) {
+  return Conversation.findOneAndDelete({
+    _id: conversationId,
+    participants: userId,
+  });
+}
+
+async function deleteMessagesByConversationId(conversationId) {
+  return Message.deleteMany({
+    conversationId: new mongoose.Types.ObjectId(conversationId),
+  });
+}
 module.exports = {
   getConversations,
   createConversation,
   getMessages,
   sendMessage,
   deleteMessage,
+  deleteConversation,
+  deleteMessagesByConversationId,
 };

@@ -20,6 +20,8 @@ module.exports = (app) => {
     usersController.changePassword
   );
 
+  route.delete('/:id', verifyToken, usersController.deleteUser);
+
   route.post('/:id/follow', verifyToken, usersController.followUser);
 
   route.post('/:id/unfollow', verifyToken, usersController.unfollowUser);

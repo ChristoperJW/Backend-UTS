@@ -37,11 +37,11 @@ async function unlikePost(userId, postId) {
 }
 
 async function postCommentByPostId({ postId, comment }) {
-  return postsRepository.createComment({ postId, comment });
+  return postRepository.createComment({ postId, comment });
 }
 
 async function getCommentsByPostId(postId) {
-  return postsRepository.getCommentsByPostId(postId);
+  return postRepository.getCommentsByPostId(postId);
 }
 
 module.exports = {
