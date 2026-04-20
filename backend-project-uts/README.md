@@ -1,61 +1,80 @@
-# LANGKAH YANG HARUS DIKERJAKAN
+# Endpoint yang bisa diakses (serta pembuatnya):
 
-1. Masukkan dulu endpoint yang harus dipakai di backend-project-uts/   src/routes.js
+# Christoper : 
+1.  POST api/auth/register/
+    Berfungsi untuk mendaftarkan akun baru
+    JSON : 
+    {
+        "email" : "...",
+        "password" : "...",
+        "confirm_password" : "...",
+        "full_name" : "...",
+    }
 
-2. Ubah dan tambahkan function serta folder untuk masing-masing routes di dalam routes.js
+2.  POST api/auth/login/
+    Berfungsi untuk login dan mendapatkan token
+    JSON : 
+    {
+        "email" : "...",
+        "password" : "...",
+    }
 
-3. Tambahkan bentuk skema yang harus dibuat dalam database di backend-project-uts/models/
+3.  GET api/auth/me/
+    Berfungsi untuk mendapatkan informasi akun, berdasarkan token
+    HEADER : 
+    AUTHENTICATION --> Bearer "token" (Bearer spasi token)
 
-4. Jika lupa cara melakukan langkah 1 - 3, lihat contoh yang ada di RevisiTemplate1 (atau RevisiTemplate2, menyusul)
+4.  GET api/users/:id/
+    Berfungsi untuk mendapatkan informasi akun, berdasarkan id
 
-5. Sesudah berhasil melakukan langkah 1 - 3 jangan sampai lupa melakukan import dan export agar dapat dijalankan
+5.  PUT api/users/:id/
+    Berfungsi mengubah email atau nama lengkap di akun, berdasarkan id (memerlukan token)
+    HEADER : 
+    AUTHENTICATION --> Bearer "token" (Bearer spasi token)
+    JSON : 
+    {
+        "email" : "...", (akun baru)
+        "full_name" : "...", (nama lengkap baru)
+    }
 
-6. Tambahan, backend-project-uts/utils diisi jika memang kita memerlukan fungsi khusus untuk melakukan suatu hal. Di contoh kemarin itu berfungsi untuk membandingkan hashed password dan normal password dan melakukan hash pada password
+6.  GET api/users?search=fullname/ (spasi memakai %20)
+    Berfungsi untuk mencari data akun, berdasarkan nama user
 
-7. Tambahkan dan kerjakan saja yang memang merupakan tugas kalian, saat kalian melakukan pull request, nanti merge akan disetujui oleh admin. Mergenya sendiri merupakan hasil gabungan yang ada di main *dan* file kalian. Jika ada override, akan diperbaiki oleh admin.
+7.  PUT api/users/:id/change-password/
+    Berfungsi untuk mengubah password user, berdasarkan id (memerlukan token)
+    HEADER : 
+    AUTHENTICATION --> Bearer "token" (Bearer spasi token)
+    JSON : 
+    {
+        "old_password" : "...",
+        "new_password" : "...",
+        "confirm_new_password" : "...",
+    }
 
-# ps, ada satu folder yang kurang di backend-project-uts. Entah apakah node_module diperlukan atau tidak, untuk itu sementara tidak ditambahkan dulu
+8.  DELETE api/users/:id/
+    Berfungsi menghapus akun user, berdasarkan id (memerlukan token)
+    HEADER : 
+    AUTHENTICATION --> Bearer "token" (Bearer spasi token)
 
-POST /auth/register
-request body:
-{
+9.  GET api/users/
+    Berfungsi untuk menampilkan semua user yang telah mendaftar
 
-    "email": "isi",
-
-    "full_name": "isi",
-
-    "password": "isi",
-
-    "confirm_password": "isi"
-
-}
-
-POST /auth/login
-
-request body:
-
-{
-
-    "email": "isi",
-
-    "password": "isi"
-    
-}
-
-(jangan lupa insert token)
+# Louise
 
 
-POST /posts
 
-request body:
 
-{
 
-    "caption": "isi",
+# Angga
 
-    "media": "isi",
 
-}
 
-Sistem kerja Feeds = mengambil 3 postingan secara random yang ada di dalam database.
-Semua kode monic gapake token karena hanya mengambil feeds secara umum dan setiap akun kan bisa komen
+
+
+# Michael
+
+
+
+
+
+# Monica

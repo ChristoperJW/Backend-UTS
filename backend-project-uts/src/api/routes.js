@@ -14,7 +14,7 @@ module.exports = () => {
   comments(app);
   conversations(app);
   feeds(app);
-  // posts(app);
+  posts(app);
   users(app);
 
   return app;
