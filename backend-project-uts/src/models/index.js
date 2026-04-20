@@ -53,6 +53,7 @@ fs.readdirSync(__dirname)
     // eslint-disable-next-line import/no-dynamic-require, global-require
     const model = require(path.join(__dirname, file))(mongoose);
     dbExports[model.modelName] = model;
+    console.log('Model loaded:', model.modelName);
   });
 
 module.exports = dbExports;

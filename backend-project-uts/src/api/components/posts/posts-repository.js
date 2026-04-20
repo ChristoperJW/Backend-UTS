@@ -17,7 +17,9 @@ async function getPost(postId) {
 }
 
 async function createPost(caption, media, userId) {
-  return Posts.create({ caption, media, userId });
+  const post = await Posts.create({ caption, media, userId });
+  // eslint-disable-next-line no-underscore-dangle
+  return Posts.findById(post._id).populate('userId', 'fullName email');
 }
 
 async function deletePost(postId) {
@@ -36,17 +38,12 @@ async function unlikePost(userId, postId) {
   return Likes.deleteOne({ userId, postId });
 }
 
-async function createPost({ username, post, caption }) {
-  const newPost = await Posts.create({ username, post, caption });
-  return newPost;
-}
-
-async function getAllPost() {
-  return Posts.find({});
-}
-
 async function createComment({ postId, comment }) {
-  const post = await Posts.findById(postId); // simpan dulu ke variable
+  console.log('postId received:', postId);
+
+  const post = await Posts.findById(postId);
+  console.log('post found:', post);
+
   if (!post) {
     throw new Error('Post tidak ditemukan!');
   }
@@ -65,8 +62,6 @@ module.exports = {
   deletePost,
   likePost,
   unlikePost,
-  createPost,
-  getAllPost,
   createComment,
   getCommentsByPostId,
 };

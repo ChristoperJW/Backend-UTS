@@ -1,4 +1,5 @@
 const express = require('express');
+const { verifyToken } = require('../../../utils/jwt');
 
 const commentsController = require('./comments-controller');
 
@@ -8,5 +9,5 @@ module.exports = (app) => {
   app.use('/comments', route);
 
   route.get('/', commentsController.getAllComments);
-  route.delete('/:id', commentsController.deleteCommentsById);
+  route.delete('/:id', verifyToken, commentsController.deleteCommentsById);
 };

@@ -3,13 +3,9 @@ module.exports = (db) =>
     'Posts',
     db.Schema(
       {
-        username: {
-          type: String,
-          required: true,
-        },
-        post: {
-          type: String,
-          required: true,
+        userId: {
+          type: db.Schema.Types.ObjectId,
+          ref: 'Users',
         },
         caption: {
           type: String,
@@ -17,10 +13,6 @@ module.exports = (db) =>
         },
         media: {
           type: String,
-        },
-        userId: {
-          type: db.Schema.Types.ObjectId,
-          ref: 'Users',
         },
       },
       {

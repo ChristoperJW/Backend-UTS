@@ -1,11 +1,11 @@
-const postService = require('./posts-service');
+const postsService = require('./posts-service');
 const { errorResponder, errorTypes } = require('../../../core/errors');
 
 async function getPosts(request, response, next) {
   try {
     const { userId, search } = request.query;
 
-    const posts = await postService.getPosts(userId, search);
+    const posts = await postsService.getPosts(userId, search);
 
     return response.status(200).json(posts);
   } catch (error) {
@@ -15,7 +15,7 @@ async function getPosts(request, response, next) {
 
 async function getPost(request, response, next) {
   try {
-    const post = await postService.getPost(request.params.id);
+    const post = await postsService.getPost(request.params.id);
 
     if (!post) {
       throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Post not found');
@@ -37,7 +37,7 @@ async function createPost(request, response, next) {
 
     const userId = request.user.id;
 
-    const post = await postService.createPost(caption, media, userId);
+    const post = await postsService.createPost(caption, media, userId);
 
     if (!post) {
       throw errorResponder(
@@ -46,7 +46,7 @@ async function createPost(request, response, next) {
       );
     }
 
-    return response.status(201).json({ message: 'Post created successfully' });
+    return response.status(201).json(post);
   } catch (error) {
     return next(error);
   }
@@ -57,7 +57,7 @@ async function deletePost(request, response, next) {
     const userId = request.user.id;
     const postId = request.params.id;
 
-    const result = await postService.deletePost(postId, userId);
+    const result = await postsService.deletePost(postId, userId);
 
     if (!result) {
       throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Post not found');
@@ -76,7 +76,7 @@ async function likePost(request, response, next) {
     const userId = request.user.id;
     const postId = request.params.id;
 
-    await postService.likePost(userId, postId);
+    await postsService.likePost(userId, postId);
 
     return response.status(200).json({ message: 'Liked' });
   } catch (error) {
@@ -89,7 +89,7 @@ async function unlikePost(request, response, next) {
     const userId = request.user.id;
     const postId = request.params.id;
 
-    await postService.unlikePost(userId, postId);
+    await postsService.unlikePost(userId, postId);
 
     return response.status(200).json({ message: 'Unliked' });
   } catch (error) {
@@ -97,42 +97,17 @@ async function unlikePost(request, response, next) {
   }
 }
 
-async function createPost(request, response, next) {
-  try {
-    const { username, post, caption } = request.body;
-
-    if (!username || !post || !caption) {
-      throw new Error('Semua field harus diisi!');
-    }
-
-    const newPost = await postsService.createPost({ username, post, caption });
-
-    return response.status(200).json(newPost);
-  } catch (error) {
-    return next(error);
-  }
-}
-
-async function getAllPost(request, response, next) {
-  try {
-    const posts = await postsService.getAllPost();
-    return response.status(200).json(posts);
-  } catch (error) {
-    return next(error);
-  }
-}
-
 async function postCommentByPostId(request, response, next) {
   try {
-    const { id } = request.params;
     const { comment } = request.body;
+    const postId = request.params.id;
 
     if (!comment) {
       throw new Error('Comment tidak boleh kosong!');
     }
 
     const newComment = await postsService.postCommentByPostId({
-      postId: id,
+      postId,
       comment,
     });
 
@@ -160,8 +135,6 @@ module.exports = {
   deletePost,
   likePost,
   unlikePost,
-  createPost,
-  getAllPost,
   postCommentByPostId,
   getCommentsByPostId,
 };
