@@ -1,13 +1,6 @@
 const mongoose = require('mongoose');
 const { Conversation, Message } = require('../../../models');
 
-async function getConversations(userId) {
-  return Conversation.find({ participants: userId }).populate(
-    'participants',
-    'full_name email'
-  );
-}
-
 async function createConversation(senderId, receiverId) {
   const existingConversation = await Conversation.findOne({
     participants: { $all: [senderId, receiverId] },
@@ -55,7 +48,6 @@ async function deleteMessagesByConversationId(conversationId) {
   });
 }
 module.exports = {
-  getConversations,
   createConversation,
   getMessages,
   sendMessage,
