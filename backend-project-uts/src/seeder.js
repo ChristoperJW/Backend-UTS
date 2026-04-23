@@ -1,6 +1,13 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable prettier/prettier */
-const { Conversation, Likes, Message, Posts, Users, Comments } = require('./models');
+const {
+  Conversations,
+  Likes,
+  Messages,
+  Posts,
+  Users,
+  Comments,
+} = require('./models');
 const { hashPassword } = require('./utils/password');
 
 const seedDatabase = async () => {
@@ -8,9 +15,9 @@ const seedDatabase = async () => {
     console.log('Resetting and seeding the database...');
 
     await Promise.all([
-      Conversation.deleteMany({}),
+      Conversations.deleteMany({}), // Ubah jadi Conversations
       Likes.deleteMany({}),
-      Message.deleteMany({}),
+      Messages.deleteMany({}), // Ubah jadi Messages
       Posts.deleteMany({}),
       Users.deleteMany({}),
       Comments.deleteMany({}),
@@ -45,42 +52,43 @@ const seedDatabase = async () => {
     ]);
 
     const createdPosts = await Posts.insertMany([
-    {
-    userId: createdUsers[1]._id,
-    media: 'New year picture',
-    caption: 'Happy New Year',
-    },
-    {
-    userId: createdUsers[2]._id,
-    media: 'citylight',
-    caption: 'beautiful city',
-    },
-    {
-    userId: createdUsers[0]._id,
-    media: 'tennis image',
-    caption: 'tennis time',
-    },
-    {
-    userId: createdUsers[3]._id,
-    media: 'basketball image',
-    caption: 'basket time',
-    },
-    {
-    userId: createdUsers[4]._id,
-    media: 'selfie',
-    caption: 'what a nice day',
-    },
+      {
+        userId: createdUsers[1]._id,
+        media: 'New year picture',
+        caption: 'Happy New Year',
+      },
+      {
+        userId: createdUsers[2]._id,
+        media: 'citylight',
+        caption: 'beautiful city',
+      },
+      {
+        userId: createdUsers[0]._id,
+        media: 'tennis image',
+        caption: 'tennis time',
+      },
+      {
+        userId: createdUsers[3]._id,
+        media: 'basketball image',
+        caption: 'basket time',
+      },
+      {
+        userId: createdUsers[4]._id,
+        media: 'selfie',
+        caption: 'what a nice day',
+      },
     ]);
 
     await Comments.insertMany([
-    { postId: createdPosts[0]._id, comment: 'Selamat tahun baru!' },
-    { postId: createdPosts[0]._id, comment: 'Wah keren fotonya!' },
-    { postId: createdPosts[1]._id, comment: 'Indah banget kotanya' },
-    { postId: createdPosts[2]._id, comment: 'Ayo main tennis bareng!' },
-    { postId: createdPosts[3]._id, comment: 'Seru banget nih!' },
+      { postId: createdPosts[0]._id, comment: 'Selamat tahun baru!' },
+      { postId: createdPosts[0]._id, comment: 'Wah keren fotonya!' },
+      { postId: createdPosts[1]._id, comment: 'Indah banget kotanya' },
+      { postId: createdPosts[2]._id, comment: 'Ayo main tennis bareng!' },
+      { postId: createdPosts[3]._id, comment: 'Seru banget nih!' },
     ]);
 
-    const createdConversations = await Conversation.insertMany([
+    // Ubah jadi Conversations
+    const createdConversations = await Conversations.insertMany([
       { participants: [createdUsers[0]._id, createdUsers[1]._id] },
       { participants: [createdUsers[1]._id, createdUsers[2]._id] },
       { participants: [createdUsers[2]._id, createdUsers[3]._id] },
@@ -88,7 +96,8 @@ const seedDatabase = async () => {
       { participants: [createdUsers[4]._id, createdUsers[0]._id] },
     ]);
 
-    await Message.insertMany([
+    // Ubah jadi Messages
+    await Messages.insertMany([
       {
         conversationId: createdConversations[0]._id,
         senderId: createdUsers[0]._id,

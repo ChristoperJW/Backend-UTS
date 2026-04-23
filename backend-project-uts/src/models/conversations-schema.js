@@ -1,23 +1,17 @@
-const mongoose = require('mongoose');
-
 module.exports = (db) =>
   db.model(
-    'Conversation',
-    new db.Schema({
-      participants: [
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'User',
-          required: true,
-        },
-      ],
-      createdAt: {
-        type: Date,
-        default: Date.now,
+    'Conversations',
+    new db.Schema(
+      {
+        participants: [
+          {
+            type: db.Schema.Types.ObjectId,
+            ref: 'Users',
+          },
+        ],
       },
-      updatedAt: {
-        type: Date,
-        default: Date.now,
-      },
-    })
+      {
+        timestamps: true,
+      }
+    )
   );
