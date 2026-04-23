@@ -15,26 +15,29 @@ async function getMessages(conversationId) {
 async function sendMessage(conversationId, senderId, text) {
   return conversationsRepository.sendMessage(conversationId, senderId, text);
 }
+
 async function removeMessage(messageId, userId) {
   const result = await conversationsRepository.deleteMessage(messageId, userId);
+
   if (result.deletedCount === 0) {
-    throw new Error('Pesan tidak ditemukan atau kamu tidak punya akses.');
+    throw new Error('Gagal menghapus pesan');
   }
+
   return result;
 }
 
 async function removeFullConversation(conversationId, userId) {
-  const deletedConversation = await conversationsRepository.deleteConversation(
+  const deleted = await conversationsRepository.deleteConversation(
     conversationId,
     userId
   );
-  if (!deletedConversation) {
-    throw new Error(
-      'Percakapan tidak ditemukan atau Anda tidak memiliki akses'
-    );
+
+  if (!deleted) {
+    throw new Error('Percakapan tidak ditemukan');
   }
+
   await conversationsRepository.deleteMessagesByConversationId(conversationId);
-  return deletedConversation;
+  return deleted;
 }
 
 module.exports = {
