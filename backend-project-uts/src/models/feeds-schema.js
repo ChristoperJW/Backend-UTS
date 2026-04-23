@@ -1,9 +1,16 @@
 module.exports = (db) =>
   db.model(
     'Feeds',
-    db.Schema({
-      username: String,
-      post: String,
-      caption: String,
-    })
+    db.Schema(
+      {
+        postId: {
+          type: db.Schema.Types.ObjectId,
+          ref: 'Posts',
+          required: true,
+        },
+      },
+      {
+        timestamps: true,
+      }
+    )
   );
