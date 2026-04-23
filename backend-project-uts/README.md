@@ -1,13 +1,25 @@
 # Endpoint Masing-masing Anggota Dan Cara Kerjanya:
 
 # Louise
-1. 
+1. POST /users/:id/follow
+    Berfungsi untuk melakukan follow terhadap akun seseorang, berdasarkan id(akun yang ingin difollow). Memerlukan token
+    HEADER: 
+    AUTHENTIFICATION --> Bearer "token" (Bearer spasi token)
 
-2. 
+2. POST /users/:id/unfollow
+    Berfungsi untuk melakukan unfollow terhadap akun seseorang, berdasarkan id(akun yang ingin diunfollow). Memerlukan token
+    HEADER:
+    AUTHENTIFICATION --> Bearer "token" (Bearer spasi token)
 
-3. 
+3. GET /users/:id/followers
+    Berfungsi untuk memeriksa siapa saja pengikut di akun yang dicek idnya.
+    HEADER: 
+    AUTHENTIFICATION --> Bearer "token" (Bearer spasi token)
 
-4. 
+4. GET /users/:id/following
+    Berfungsi untuk memeriksa siapa saja yang diikuti di akun yang dicek idnya.
+    HEADER: 
+    AUTHENTIFICATION --> Bearer "token" (Bearer spasi token)
 
 5. PUT api/users/:id/change-password/
     Berfungsi untuk mengubah password user, berdasarkan id (memerlukan token)
@@ -32,7 +44,41 @@
     AUTHENTICATION --> Bearer "token" (Bearer spasi token)
 
 # Michael
+1. GET api/posts
+    Berfungsi melihat semua postingan yang telah di upload users.   
 
+2. GET api/posts/:id
+    Berfungsi melihat salah satu postingan dengan memasukkan id postingan
+    
+3. POST api/posts/:id
+    Berfungsi untuk mengupload postingan.
+    HEADER : 
+    AUTHENTICATION --> Bearer "token" (Bearer spasi token)
+
+    Request Body JSON :
+
+    {
+
+        "caption" : "..."
+
+        "media" " "...
+
+    }
+
+4. DELETE api/posts/:id
+    Berfungsi untuk menghapus postingan yang dibuat user
+    HEADER : 
+    AUTHENTICATION --> Bearer "token" (Bearer spasi token)
+
+5. POST api/posts/:id/like
+    Berfungsi untuk memberi like pada postingan.
+    HEADER : 
+    AUTHENTICATION --> Bearer "token" (Bearer spasi token)
+
+6. DELETE api/posts/:id/like
+    Berfungsi untuk menghapus like pada postingan ( unlike ).
+    HEADER : 
+    AUTHENTICATION --> Bearer "token" (Bearer spasi token)
 
 # Angga
 
