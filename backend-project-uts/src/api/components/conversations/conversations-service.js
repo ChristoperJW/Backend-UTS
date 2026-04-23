@@ -16,14 +16,11 @@ async function sendMessage(conversationId, senderId, text) {
   return conversationsRepository.sendMessage(conversationId, senderId, text);
 }
 async function removeMessage(messageId, userId) {
-  const deleted = await conversationsRepository.deleteMessage(
-    messageId,
-    userId
-  );
-  if (!deleted) {
+  const result = await conversationsRepository.deleteMessage(messageId, userId);
+  if (result.deletedCount === 0) {
     throw new Error('Pesan tidak ditemukan atau kamu tidak punya akses.');
   }
-  return deleted;
+  return result;
 }
 
 async function removeFullConversation(conversationId, userId) {

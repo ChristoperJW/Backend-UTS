@@ -1,5 +1,22 @@
 const conversationsService = require('./conversations-service');
 
+async function getUserConversations(req, res) {
+  try {
+    const userId = req.user.id;
+    const conversations = await conversationsService.getConversations(userId);
+
+    res.status(200).json({
+      statusCode: 200,
+      data: conversations,
+    });
+  } catch (error) {
+    res.status(400).json({
+      statusCode: 400,
+      message: error.message,
+    });
+  }
+}
+
 async function createConversation(request, response, next) {
   try {
     const senderId = request.user.id;
@@ -78,6 +95,7 @@ async function deleteConversation(req, res) {
 }
 
 module.exports = {
+  getUserConversations,
   createConversation,
   getMessages,
   sendMessage,
