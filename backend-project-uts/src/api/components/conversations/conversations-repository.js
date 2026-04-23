@@ -1,23 +1,21 @@
 const mongoose = require('mongoose');
-const { Conversation, Message } = require('../../../models');
+const { Conversations, Messages } = require('../../../models');
 
 async function getConversations(userId) {
-  return Conversation.find({ participants: userId }).populate(
+  return Conversations.find({ participants: userId }).populate(
     'participants',
-    'full_name email'
+    'fullName email'
   );
 }
 
 async function createConversation(senderId, receiverId) {
-  const existingConversation = await Conversation.findOne({
+  const existingConversation = await Conversations.findOne({
     participants: { $all: [senderId, receiverId] },
   });
 
-  if (existingConversation) {
-    return existingConversation;
-  }
+  if (existingConversation) return existingConversation;
 
-  const newConversation = new Conversation({
+  const newConversation = new Conversations({
     participants: [senderId, receiverId],
   });
 
@@ -25,11 +23,11 @@ async function createConversation(senderId, receiverId) {
 }
 
 async function getMessages(conversationId) {
-  return Message.find({ conversationId }).sort({ createdAt: 1 });
+  return Messages.find({ conversationId }).sort({ createdAt: 1 });
 }
 
 async function sendMessage(conversationId, senderId, text) {
-  const newMessage = new Message({
+  const newMessage = new Messages({
     conversationId,
     senderId,
     text,
@@ -39,21 +37,22 @@ async function sendMessage(conversationId, senderId, text) {
 }
 
 async function deleteMessage(messageId, userId) {
-  return Message.deleteOne({ _id: messageId, senderId: userId });
+  return Messages.deleteOne({ _id: messageId, senderId: userId });
 }
 
 async function deleteConversation(conversationId, userId) {
-  return Conversation.findOneAndDelete({
+  return Conversations.findOneAndDelete({
     _id: conversationId,
     participants: userId,
   });
 }
 
 async function deleteMessagesByConversationId(conversationId) {
-  return Message.deleteMany({
+  return Messages.deleteMany({
     conversationId: new mongoose.Types.ObjectId(conversationId),
   });
 }
+
 module.exports = {
   getConversations,
   createConversation,

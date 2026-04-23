@@ -1,5 +1,16 @@
 const conversationsService = require('./conversations-service');
 
+async function getUserConversations(request, response, next) {
+  try {
+    const userId = request.user.id;
+    const conversations = await conversationsService.getConversations(userId);
+
+    return response.status(200).json({ statusCode: 200, data: conversations });
+  } catch (error) {
+    return next(error);
+  }
+}
+
 async function createConversation(request, response, next) {
   try {
     const senderId = request.user.id;
@@ -8,6 +19,7 @@ async function createConversation(request, response, next) {
       senderId,
       receiverId
     );
+
     return response.status(201).json(conversation);
   } catch (error) {
     return next(error);
@@ -18,6 +30,7 @@ async function getMessages(request, response, next) {
   try {
     const { id } = request.params;
     const messages = await conversationsService.getMessages(id);
+
     return response.status(200).json(messages);
   } catch (error) {
     return next(error);
@@ -33,51 +46,43 @@ async function sendMessage(request, response, next) {
       senderId,
       text
     );
+
     return response.status(201).json(newMessage);
   } catch (error) {
     return next(error);
   }
 }
 
-async function deleteMessage(req, res) {
+async function deleteMessage(request, response, next) {
   try {
-    const { messageId } = req.params;
-    const userId = req.user.id;
-
+    const { messageId } = request.params;
+    const userId = request.user.id;
     await conversationsService.removeMessage(messageId, userId);
 
-    res.status(200).json({
-      statusCode: 200,
-      message: 'Pesan berhasil dihapus',
-    });
+    return response
+      .status(200)
+      .json({ statusCode: 200, message: 'Berhasil dihapus' });
   } catch (error) {
-    res.status(400).json({
-      statusCode: 400,
-      message: error.message,
-    });
+    return next(error);
   }
 }
 
-async function deleteConversation(req, res) {
+async function deleteConversation(request, response, next) {
   try {
-    const { id } = req.params;
-    const userId = req.user.id;
-
+    const { id } = request.params;
+    const userId = request.user.id;
     await conversationsService.removeFullConversation(id, userId);
 
-    res.status(200).json({
-      statusCode: 200,
-      message: 'Seluruh percakapan dan pesan terkait berhasil dihapus',
-    });
+    return response
+      .status(200)
+      .json({ statusCode: 200, message: 'Percakapan dihapus' });
   } catch (error) {
-    res.status(400).json({
-      statusCode: 400,
-      message: error.message,
-    });
+    return next(error);
   }
 }
 
 module.exports = {
+  getUserConversations,
   createConversation,
   getMessages,
   sendMessage,

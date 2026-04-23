@@ -1,20 +1,21 @@
 # Endpoint Masing-masing Anggota Dan Cara Kerjanya:
 
 # Louise
-1. 
 
-2. 
+1.
 
-3. 
+2.
 
-4. 
+3.
 
-5. PUT api/users/:id/change-password/
+4.
+
+5.  PUT api/users/:id/change-password/
     Berfungsi untuk mengubah password user, berdasarkan id (memerlukan token)
-    HEADER : 
+    HEADER :
     AUTHENTICATION --> Bearer "token" (Bearer spasi token)
 
-    Request Body JSON : 
+    Request Body JSON :
 
     {
 
@@ -28,21 +29,59 @@
 
 6.  DELETE api/users/:id
     Berfungsi menghapus akun user, berdasarkan id (memerlukan token)
-    HEADER : 
+    HEADER :
     AUTHENTICATION --> Bearer "token" (Bearer spasi token)
 
 # Michael
 
-
 # Angga
 
+1. GET api/conversations
+   Berfungsi untuk menampilkan daftar semua ruangan obrolan pengguna yang sedang login beserta nama dan email partisipan (memerlukan token).
+   HEADER :
+   AUTHENTICATION --> Bearer "token" (Bearer spasi token)
 
-# Christoper : 
+2. POST api/conversations
+   Berfungsi untuk membuat ruangan obrolan baru atau mencari ruangan yang sudah ada dengan user lain (memerlukan token).
+   HEADER :
+   AUTHENTICATION --> Bearer "token" (Bearer spasi token)
+   Request Body JSON :
+   {
+   "receiverId" : "...",
+   }
+
+3. GET api/conversations/:id/messages
+   Berfungsi untuk menarik riwayat pesan di dalam satu ruangan obrolan spesifik berdasarkan ID ruangan (memerlukan token).
+   HEADER :
+   AUTHENTICATION --> Bearer "token" (Bearer spasi token)
+
+4. POST api/conversations/messages
+   Berfungsi untuk mengirim pesan baru ke dalam suatu ruangan obrolan (memerlukan token).
+   HEADER :
+   AUTHENTICATION --> Bearer "token" (Bearer spasi token)
+   Request Body JSON :
+   {
+   "conversationId" : "...",
+   "text" : "...",
+   }
+
+5. DELETE api/conversations/messages/:messageId
+   Berfungsi untuk menghapus satu pesan spesifik berdasarkan ID pesan. Hanya bisa dilakukan oleh pengirim pesan tersebut (memerlukan token).
+   HEADER :
+   AUTHENTICATION --> Bearer "token" (Bearer spasi token)
+
+6. DELETE api/conversations/:id
+   Berfungsi untuk menghapus seluruh ruangan obrolan beserta semua riwayat pesan yang ada di dalamnya secara permanen atau Cascade Delete (memerlukan token).
+   HEADER :
+   AUTHENTICATION --> Bearer "token" (Bearer spasi token)
+
+# Christoper :
+
 1.  POST api/auth/register
 
     Berfungsi untuk mendaftarkan akun baru.
 
-    Request Body JSON : 
+    Request Body JSON :
 
     {
 
@@ -60,7 +99,7 @@
 
     Berfungsi untuk login dan mendapatkan token.
 
-    Request Body JSON : 
+    Request Body JSON :
 
     {
 
@@ -74,7 +113,7 @@
 
     Berfungsi untuk mendapatkan informasi akun, berdasarkan token.
 
-    HEADER : 
+    HEADER :
     AUTHENTICATION --> Bearer "token" (Bearer spasi token)
 
 4.  GET api/users/:id
@@ -85,10 +124,10 @@
 
     Berfungsi mengubah email atau nama lengkap di akun, berdasarkan id (memerlukan token).
 
-    HEADER : 
+    HEADER :
     AUTHENTICATION --> Bearer "token" (Bearer spasi token)
 
-    Request Body JSON : 
+    Request Body JSON :
 
     {
 
@@ -107,39 +146,40 @@
     Berfungsi untuk menampilkan semua user yang telah mendaftar.
 
 # Monica
-1. GET api/feeds
 
-   Berfungsi untuk menampilkan feeds, mengambil 3 postingan secara random.
+1.  GET api/feeds
 
-2. POST /posts/:id/comments
+    Berfungsi untuk menampilkan feeds, mengambil 3 postingan secara random.
 
-   Berfungsi untuk melakukan comment berdasaarkan id postingan (memerlukan token).
+2.  POST /posts/:id/comments
 
-   HEADER : 
-   AUTHENTICATION --> Bearer "token" (Bearer spasi token)
+    Berfungsi untuk melakukan comment berdasaarkan id postingan (memerlukan token).
 
-   Request Body JSON : 
+    HEADER :
+    AUTHENTICATION --> Bearer "token" (Bearer spasi token)
 
-   {
+    Request Body JSON :
 
-       "comment" : "...",
+    {
 
-   }
+        "comment" : "...",
 
-3. GET /posts/:id/comments
+    }
 
-   Berfungsi untuk menampilkan comment berdasarkan id postingan (memerlukan token).
+3.  GET /posts/:id/comments
 
-   HEADER : 
-   AUTHENTICATION --> Bearer "token" (Bearer spasi token)
+    Berfungsi untuk menampilkan comment berdasarkan id postingan (memerlukan token).
 
-4. GET /comments
+    HEADER :
+    AUTHENTICATION --> Bearer "token" (Bearer spasi token)
 
-   Berfungsi untuk menampilkan comment secara keseluruhan.
+4.  GET /comments
 
-5. DELETE /comments/:id
+    Berfungsi untuk menampilkan comment secara keseluruhan.
 
-   Berfungsi untuk menghapus komentar berdasarkan id (memerlukan token).
+5.  DELETE /comments/:id
 
-   HEADER : 
-   AUTHENTICATION --> Bearer "token" (Bearer spasi token)
+    Berfungsi untuk menghapus komentar berdasarkan id (memerlukan token).
+
+    HEADER :
+    AUTHENTICATION --> Bearer "token" (Bearer spasi token)
