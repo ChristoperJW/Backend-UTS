@@ -21,8 +21,6 @@
     HEADER: 
     AUTHENTIFICATION --> Bearer "token" (Bearer spasi token)
 
-4.
-
 5.  PUT api/users/:id/change-password/
     Berfungsi untuk mengubah password user, berdasarkan id (memerlukan token)
     HEADER :
